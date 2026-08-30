@@ -25,6 +25,7 @@
   "derivation": {
     "method": "BRIEF.md was read and split; no design decision was taken. Every fixed_requirements entry, and every spec-table row sourced from the brief, carries a quotation that was checked by literal substring match against the brief bytes digested above. The build refuses to emit this file if any quotation is not found.",
     "quotations_verified": 22,
+    "where_the_quotations_are": "Every one of them is in this file: fixed_requirements[].brief_evidence and brief_spec_rows[].brief_evidence. The count above is the sum of those two lists, so it is recomputable from this repository alone - re-read BRIEF.md and check each string is a substring of it. brief_spec_rows carries the quotations behind the README's spec table, which would otherwise cite the brief with the evidence left in a build script.",
     "review": "two rounds of adversarial review against the brief, looking for invented requirements, lost requirements, evidence supporting a weaker claim than the one made beside it, and worksheet questions that presuppose their own answer"
   },
   "fixed_requirements": [
@@ -92,6 +93,53 @@
       "id": "REQ-13",
       "requirement": "This repository stays a consumer of the shared PCBA_AutoDesignAndTest toolkit; board-specific logic must not accumulate in the toolkit.",
       "brief_evidence": "The repository should remain a consumer of the shared `PCBA_AutoDesignAndTest` toolkit rather than accumulating board-specific logic in the toolkit."
+    }
+  ],
+  "brief_spec_rows": [
+    {
+      "aspect": "Board function",
+      "value": "100BASE-TX Ethernet sensor node",
+      "brief_evidence": "Create a 100BASE-TX Ethernet sensor node powered only through IEEE 802.3af PoE."
+    },
+    {
+      "aspect": "Power source",
+      "value": "IEEE 802.3af PoE only — the brief names no other power input",
+      "brief_evidence": "powered only through IEEE 802.3af PoE"
+    },
+    {
+      "aspect": "PoE PD interface",
+      "value": "Required as a functional block; implementation unspecified",
+      "brief_evidence": "Include the PoE PD interface, isolated DC/DC conversion"
+    },
+    {
+      "aspect": "Isolated DC/DC conversion",
+      "value": "Required as a functional block; no controller, transformer, turns ratio or operating point is named",
+      "brief_evidence": "Include the PoE PD interface, isolated DC/DC conversion, Ethernet PHY/MCU"
+    },
+    {
+      "aspect": "Ethernet front end",
+      "value": "Ethernet PHY plus MCU; no device, MAC interface or clocking named",
+      "brief_evidence": "isolated DC/DC conversion, Ethernet PHY/MCU, and connectors for several low-speed sensors"
+    },
+    {
+      "aspect": "Connector / magnetics arrangement",
+      "value": "RJ45 and magnetics, arrangement appropriate to PoE; integrated vs discrete not stated",
+      "brief_evidence": "Use an RJ45/magnetics arrangement appropriate to PoE."
+    },
+    {
+      "aspect": "Sensor interfaces",
+      "value": "Connectors for several low-speed sensors on the isolated low-voltage side; \"several\" is not a number and no bus is named",
+      "brief_evidence": "several low-speed sensors on the isolated low-voltage side"
+    },
+    {
+      "aspect": "Isolation spacing",
+      "value": "Must be respected around the DC/DC barrier; no working voltage, creepage/clearance figure or safety standard is named",
+      "brief_evidence": "The board must respect isolation spacing around the DC/DC barrier"
+    },
+    {
+      "aspect": "Noise partitioning constraint",
+      "value": "Flyback switching currents must be kept away from PHY analog circuitry — the brief's own wording is where \"flyback\" enters the design",
+      "brief_evidence": "keep noisy flyback switching currents away from PHY analog circuitry"
     }
   ],
   "open_decisions": [
